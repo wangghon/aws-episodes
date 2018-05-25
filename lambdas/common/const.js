@@ -2,7 +2,7 @@ const defaultParameters = {
   headers: { 'Content-Type': 'application/json' },
 };
 
-export const HTTP_CODES = {
+const HTTP_CODES = {
   SUCCESS_POST: 201,
   ERROR_BAD_REQUEST: 400,
 };
@@ -12,17 +12,19 @@ const ERROR_DESCRIPTION = {
 };
 
 const getErrorDescriptionObj = (statusCode) => {
-  const errorKey = Object.keys(ERROR_DESCRIPTION).find(key => object[key] === value);
-  if (!errorKey) return {}
+  const errorKey = Object.keys(ERROR_DESCRIPTION).find((key) => ERROR_DESCRIPTION[key] === statusCode);
+  if (!errorKey) return {};
   return ERROR_DESCRIPTION[errorKey] || {};
-}
+};
 
-export const getCustomResponses = (statusCode) => {
+const getCustomResponse = (statusCode) => {
   const descObj = getErrorDescriptionObj(statusCode);
 
-  return  {
+  return {
     ...defaultParameters,
     statusCode,
     body: JSON.stringify(descObj),
   };
 };
+
+export default { getCustomResponse, HTTP_CODES };

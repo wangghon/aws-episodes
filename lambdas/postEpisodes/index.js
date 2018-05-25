@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import { getCustomResponses, HTTP_CODES } from './common/const';
+import { getCustomResponse, HTTP_CODES } from './common/const';
 
 const validateRequest = (request) => {
   if (!request) return false;
@@ -14,27 +14,24 @@ const handlePostEpisodes = ({ payload }, callback) => {
     const { episodeCount, image: { showImage }, slug, title, drm } = episode;
     return showImage && slug && title && episodeCount && episodeCount > 0 && drm;
   });
-  
-  const response = validEpisodes.map(({ image, slug, title }) => {
-    return {
-      image: image.showImage,
-      slug,
-      title,
-    }
-  });
 
-  if (response.length === 0 ) throw HTTP_CODES.ERROR_BAD_REQUEST;
+  const response = validEpisodes.map(({ image, slug, title }) => ({
+    image: image.showImage,
+    slug,
+    title,
+  }));
+
+  if (response.length === 0) throw HTTP_CODES.ERROR_BAD_REQUEST;
   const res = {
     ...getCustomResponse(HTTP_CODES.SUCCESS_POST),
     body: JSON.stringify({ response }),
-  } 
+  };
   console.log('return result:', res);
 
   callback(null, res);
 };
 
 exports.handler = (event, context, callback) => {
-  context.callbackWaitsForEmptyEventLoop = false;
 
   console.log('start to handle events:', JSON.stringify(event));
   console.log('the context is:', JSON.stringify(context));
