@@ -1,0 +1,35 @@
+{
+  "name": "aws-episodes",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/wangghon/aws-episodes.git",
+  "author": "Hongbo Wang <wanghongbo1@hotmail.com>",
+  "license": "MIT",
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "lint": "yarn && ./scripts/lint.sh",
+    "build:clean": "rm -Rf bin/",
+    "build": "./scripts/build.sh",
+    "create:lambda": "./scripts/create-lambda.sh",
+    "update:lambda": "./scripts/update-lambda.sh"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
+}

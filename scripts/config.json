@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "postE": {
+      "functionName": "post_episodes_lambda",
+      "folder": "postEpisodes"
+    }
+  }
+}
