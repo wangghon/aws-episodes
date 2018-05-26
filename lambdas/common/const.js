@@ -2,29 +2,30 @@ const defaultParameters = {
   headers: { 'Content-Type': 'application/json' },
 };
 
-const HTTP_CODES = {
+export const HTTP_CODES = {
   SUCCESS_POST: 201,
   ERROR_BAD_REQUEST: 400,
 };
 
+export const ERROR_BAD_REQUEST_DETAIL = {
+  JSON_PARSE_FAIL: 'JSON_PARSE_FAIL',
+  INVALID_CONTENT: 'INVALID_CONTENT',
+};
+
 const ERROR_DESCRIPTION = {
-  ERROR_BAD_REQUEST: { error: 'Could not decode request: JSON parsing failed' }
+  JSON_PARSE_FAIL: { error: 'Could not decode request: JSON parsing failed' },
+  INVALID_CONTENT: { error: 'Could not process request: No valid entity' }
 };
 
-const getErrorDescriptionObj = (statusCode) => {
-  const errorKey = Object.keys(ERROR_DESCRIPTION).find((key) => ERROR_DESCRIPTION[key] === statusCode);
-  if (!errorKey) return {};
-  return ERROR_DESCRIPTION[errorKey] || {};
-};
+const getErrorDescriptionObj = (detailError) => ERROR_DESCRIPTION[detailError] || {};
 
-const getCustomResponse = (statusCode) => {
-  const descObj = getErrorDescriptionObj(statusCode);
-
+export const getCustomResponse = (error = null) => {
+  const statusCode = error ? HTTP_CODES.ERROR_BAD_REQUEST : HTTP_CODES.SUCCESS_POST;
+  const body = JSON.stringify(error ? getErrorDescriptionObj(error) : {});
   return {
     ...defaultParameters,
     statusCode,
-    body: JSON.stringify(descObj),
+    body,
   };
 };
 
-export default { getCustomResponse, HTTP_CODES };
