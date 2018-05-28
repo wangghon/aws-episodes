@@ -3,6 +3,7 @@ const defaultParameters = {
 };
 
 export const HTTP_CODES = {
+  SUCCESS_GET: 200,
   SUCCESS_POST: 201,
   ERROR_BAD_REQUEST: 400,
 };
@@ -20,7 +21,7 @@ const ERROR_DESCRIPTION = {
 const getErrorDescriptionObj = (detailError) => ERROR_DESCRIPTION[detailError] || {};
 
 export const getCustomResponse = (error = null) => {
-  const statusCode = error ? HTTP_CODES.ERROR_BAD_REQUEST : HTTP_CODES.SUCCESS_POST;
+  const statusCode = error ? HTTP_CODES.ERROR_BAD_REQUEST : HTTP_CODES.SUCCESS_GET;
   const body = JSON.stringify(error ? getErrorDescriptionObj(error) : {});
   return {
     ...defaultParameters,
